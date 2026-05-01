@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="uz" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Azizbek Abilov — Suv ta'minoti muhandisi</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --navy:#0d2137;--navy2:#163352;--gold:#b07d2e;--gold2:#c99a45;
+  --bg:#f7f5f0;--surface:#ffffff;--text:#1c1c1c;--muted:#5a5a5a;--border:#ddd8cf;
+  --nav-bg:#0d2137;--card-bg:#ffffff;--sec-alt:#f7f5f0;
+  --exp-bg:#0d2137;--exp-text:#fff;--exp-muted:rgba(255,255,255,.55);
+  --contact-bg:#0d2137;
+  font-family:'Georgia',serif;
+  scroll-behavior:smooth;
+}
+
+body.dark{
+  --bg:#0a0f1a;--surface:#111927;--text:#e8e4dc;--muted:#8a8880;--border:#2a3245;
+  --nav-bg:#07111e;--card-bg:#141e2e;--sec-alt:#0d1525;
+  --exp-bg:#07111e;--exp-text:#e8e4dc;--exp-muted:rgba(232,228,220,.5);
+  --contact-bg:#07111e;
+}
+
+body{background:var(--bg);color:var(--text);line-height:1.7;font-size:16px;transition:background .4s,color .4s;}
+a{color:inherit;text-decoration:none;}
+section,div.hero{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease;}
+section.visible,div.hero.visible{opacity:1;transform:translateY(0);}
+
+/* NAV */
+nav{
+  background:var(--nav-bg);position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 3rem;height:60px;border-bottom:2px solid var(--gold);
+  transition:background .4s;
+}
+.nav-logo{font-size:18px;font-weight:700;color:var(--gold2);letter-spacing:1px;cursor:pointer;}
+.nav-links{display:flex;gap:1.5rem;list-style:none;}
+.nav-links a{color:rgba(255,255,255,.7);font-size:12px;letter-spacing:1.5px;font-family:Arial,sans-serif;text-transform:uppercase;transition:color .2s;}
+.nav-links a:hover{color:var(--gold2);}
+
+.nav-controls{display:flex;align-items:center;gap:.8rem;}
+
+/* LANG SWITCHER */
+.lang-switcher{display:flex;gap:4px;background:rgba(255,255,255,.08);border-radius:4px;padding:3px;}
+.lang-btn{
+  font-family:Arial,sans-serif;font-size:11px;font-weight:600;
+  letter-spacing:.5px;padding:4px 8px;border:none;cursor:pointer;
+  border-radius:3px;background:transparent;color:rgba(255,255,255,.55);
+  transition:background .2s,color .2s;
+}
+.lang-btn.active{background:var(--gold);color:#fff;}
+.lang-btn[data-l="ar"]{font-family:Arial,sans-serif;}
+
+/* DARK MODE TOGGLE */
+.theme-btn{
+  width:36px;height:36px;border:1px solid rgba(255,255,255,.2);
+  border-radius:4px;background:transparent;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;transition:border-color .2s,background .2s;
+  color:#fff;
+}
+.theme-btn:hover{border-color:var(--gold);background:rgba(176,125,46,.15);}
+
+/* HERO */
+.hero{background:var(--nav-bg);padding:100px 3rem 5rem;position:relative;transition:background .4s;}
+.hero-line{width:50px;height:2px;background:var(--gold);margin-bottom:1.2rem;}
+.hero-tag{font-family:Arial,sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold2);margin-bottom:1.2rem;}
+.hero h1{font-size:clamp(2.4rem,5vw,3.8rem);color:#fff;font-weight:700;line-height:1.1;margin-bottom:.8rem;}
+.hero h1 span{color:var(--gold2);}
+.hero-sub{font-family:Arial,sans-serif;font-size:16px;color:rgba(255,255,255,.55);margin-bottom:2rem;letter-spacing:.3px;}
+.hero-langs{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:2.5rem;}
+.lang-badge{font-family:Arial,sans-serif;font-size:12px;padding:4px 12px;border:1px solid rgba(176,125,46,.5);color:var(--gold2);border-radius:2px;letter-spacing:.5px;}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn-gold{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:#fff;padding:.7rem 1.8rem;border:none;cursor:pointer;font-family:Arial,sans-serif;font-size:13px;letter-spacing:.5px;font-weight:600;border-radius:2px;transition:background .2s,transform .15s;}
+.btn-gold:hover{background:var(--gold2);transform:translateY(-2px);}
+.btn-border{display:inline-flex;align-items:center;gap:8px;background:transparent;color:#fff;padding:.7rem 1.8rem;border:1px solid rgba(255,255,255,.3);cursor:pointer;font-family:Arial,sans-serif;font-size:13px;letter-spacing:.5px;border-radius:2px;transition:border-color .2s,background .2s,transform .15s;}
+.btn-border:hover{border-color:var(--gold);background:rgba(176,125,46,.1);transform:translateY(-2px);}
+
+/* SECTIONS */
+section{padding:5rem 3rem;transition:background .4s;}
+.sec-tag{font-family:Arial,sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;}
+h2{font-size:2.1rem;font-weight:700;color:var(--navy);line-height:1.2;margin-bottom:.8rem;transition:color .4s;}
+body.dark h2{color:var(--gold2);}
+.divider{width:44px;height:2px;background:var(--gold);margin-bottom:2.5rem;}
+
+/* ABOUT */
+.about{background:var(--surface);}
+.about-grid{display:grid;grid-template-columns:200px 1fr;gap:4rem;align-items:start;}
+.avatar-box{background:var(--navy);width:200px;height:250px;display:flex;align-items:center;justify-content:center;border-radius:2px;position:relative;}
+.avatar-box::after{content:'';position:absolute;bottom:-10px;right:-10px;width:190px;height:240px;border:2px solid var(--gold);border-radius:2px;}
+.avatar-letters{font-size:4rem;font-weight:700;color:rgba(176,125,46,.3);}
+.about-text p{color:var(--muted);margin-bottom:1rem;font-family:Arial,sans-serif;font-size:15px;}
+.about-text strong{color:var(--text);}
+
+/* SKILLS */
+.skills{background:var(--sec-alt);}
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.2rem;}
+.skill-card{background:var(--card-bg);border:1px solid var(--border);border-top:3px solid var(--gold);padding:1.5rem;border-radius:2px;transition:transform .2s,background .4s,border-color .4s;}
+.skill-card:hover{transform:translateY(-4px);}
+.skill-card h3{font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:.5rem;transition:color .4s;}
+body.dark .skill-card h3{color:var(--gold2);}
+.skill-card p{font-family:Arial,sans-serif;font-size:13px;color:var(--muted);line-height:1.5;}
+
+/* EXPERIENCE */
+.experience{background:var(--exp-bg);}
+.experience .sec-tag{color:var(--gold2);}
+.experience h2{color:#fff;}
+body.dark .experience h2{color:var(--gold2);}
+.timeline{padding-left:1.5rem;border-left:1px solid rgba(176,125,46,.3);}
+.tl-item{position:relative;padding-left:1.5rem;margin-bottom:2.5rem;}
+.tl-dot{position:absolute;left:calc(-1.5rem - 5px);top:7px;width:10px;height:10px;background:var(--gold);border-radius:50%;box-shadow:0 0 0 4px rgba(176,125,46,.2);}
+.tl-date{font-family:Arial,sans-serif;font-size:11px;letter-spacing:1.5px;color:var(--gold2);text-transform:uppercase;margin-bottom:3px;}
+.tl-role{font-size:1.1rem;font-weight:700;color:#fff;margin-bottom:3px;}
+.tl-org{font-family:Arial,sans-serif;font-size:13px;color:var(--exp-muted);margin-bottom:.6rem;}
+.tl-desc{font-family:Arial,sans-serif;font-size:14px;color:var(--exp-muted);line-height:1.6;}
+
+/* EDUCATION */
+.edu{background:var(--sec-alt);}
+.edu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;}
+.edu-card{background:var(--card-bg);border:1px solid var(--border);padding:1.5rem 1.75rem;border-radius:2px;transition:background .4s,border-color .4s,transform .2s;}
+.edu-card:hover{transform:translateY(-3px);}
+.edu-year{font-family:Arial,sans-serif;font-size:11px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:.4rem;}
+.edu-title{font-size:1.05rem;font-weight:700;color:var(--navy);margin-bottom:.3rem;transition:color .4s;}
+body.dark .edu-title{color:var(--gold2);}
+.edu-uni{font-family:Arial,sans-serif;font-size:13px;color:var(--muted);}
+
+/* INTERESTS */
+.interests{background:var(--surface);}
+.int-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;}
+.int-card{border:1px solid var(--border);padding:1.4rem;text-align:center;border-radius:2px;background:var(--card-bg);transition:background .4s,border-color .4s,transform .2s;}
+.int-card:hover{transform:translateY(-3px);}
+.int-card h3{font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:.3rem;transition:color .4s;}
+body.dark .int-card h3{color:var(--gold2);}
+.int-card p{font-family:Arial,sans-serif;font-size:12px;color:var(--muted);}
+.int-icon-wrap{width:48px;height:48px;background:rgba(176,125,46,.12);border-radius:50%;margin:0 auto .8rem;display:flex;align-items:center;justify-content:center;}
+.int-icon-wrap svg{width:22px;height:22px;stroke:var(--gold);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+
+/* CONTACT */
+.contact{background:var(--contact-bg);}
+.contact .sec-tag{color:var(--gold2);}
+.contact h2{color:#fff;}
+body.dark .contact h2{color:var(--gold2);}
+.contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;}
+.contact-desc{font-family:Arial,sans-serif;font-size:15px;color:rgba(255,255,255,.6);margin-bottom:2rem;line-height:1.7;}
+.contact-items{display:flex;flex-direction:column;gap:1rem;}
+.c-item{display:flex;align-items:center;gap:1rem;padding:.9rem 1rem;border:1px solid rgba(176,125,46,.25);border-radius:2px;cursor:pointer;transition:border-color .2s,background .2s,transform .15s;}
+.c-item:hover{border-color:var(--gold);background:rgba(176,125,46,.08);transform:translateX(4px);}
+.c-icon{width:38px;height:38px;background:rgba(176,125,46,.15);border-radius:2px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.c-icon svg{width:18px;height:18px;stroke:#c99a45;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.c-label{font-family:Arial,sans-serif;font-size:11px;color:rgba(255,255,255,.4);letter-spacing:1px;text-transform:uppercase;margin-bottom:2px;}
+.c-val{font-family:Arial,sans-serif;font-size:14px;color:var(--gold2);}
+.contact-right p{font-family:Arial,sans-serif;font-size:15px;color:rgba(255,255,255,.55);line-height:1.8;}
+.contact-right ul{list-style:none;margin-top:1.5rem;display:flex;flex-direction:column;gap:.8rem;}
+.contact-right li{font-family:Arial,sans-serif;font-size:14px;color:rgba(255,255,255,.5);padding-left:1rem;border-left:2px solid var(--gold);line-height:1.5;}
+
+/* FOOTER */
+footer{background:#07111e;padding:1.5rem 3rem;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(176,125,46,.2);transition:background .4s;}
+footer p{font-family:Arial,sans-serif;font-size:12px;color:rgba(255,255,255,.35);}
+.foot-logo{font-size:15px;font-weight:700;color:var(--gold2);}
+
+/* RTL for Arabic */
+body.rtl{direction:rtl;}
+body.rtl .about-grid{direction:rtl;}
+body.rtl .timeline{padding-left:0;padding-right:1.5rem;border-left:none;border-right:1px solid rgba(176,125,46,.3);}
+body.rtl .tl-item{padding-left:0;padding-right:1.5rem;}
+body.rtl .tl-dot{left:auto;right:calc(-1.5rem - 5px);}
+body.rtl .contact-right li{padding-left:0;padding-right:1rem;border-left:none;border-right:2px solid var(--gold);}
+body.rtl .c-item:hover{transform:translateX(-4px);}
+
+@media(max-width:760px){
+  nav{padding:0 1rem;}
+  .nav-links{display:none;}
+  section{padding:3.5rem 1.2rem;}
+  .hero{padding:85px 1.2rem 3rem;}
+  .about-grid,.contact-inner{grid-template-columns:1fr;gap:2rem;}
+  footer{flex-direction:column;gap:.5rem;text-align:center;}
+  .nav-controls{gap:.5rem;}
+  .lang-btn{padding:3px 6px;font-size:10px;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">Azizbek Abilov</div>
+  <ul class="nav-links">
+    <li><a href="#about" data-i="nav_about">Men haqimda</a></li>
+    <li><a href="#skills" data-i="nav_skills">Ko'nikmalar</a></li>
+    <li><a href="#experience" data-i="nav_exp">Tajriba</a></li>
+    <li><a href="#education" data-i="nav_edu">Ta'lim</a></li>
+    <li><a href="#contact" data-i="nav_contact">Aloqa</a></li>
+  </ul>
+  <div class="nav-controls">
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-l="uz">UZ</button>
+      <button class="lang-btn" data-l="en">EN</button>
+      <button class="lang-btn" data-l="ru">RU</button>
+      <button class="lang-btn" data-l="ar">AR</button>
+    </div>
+    <button class="theme-btn" id="themeBtn" title="Rejimni o'zgartirish">☀</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="home">
+  <div class="hero-line"></div>
+  <div class="hero-tag" data-i="hero_tag">Muhandis · Professional</div>
+  <h1><span data-i="hero_hello">Salom</span>, <span data-i="hero_i">men</span> <span>Azizbek Abilov</span></h1>
+  <p class="hero-sub" data-i="hero_sub">Suv ta'minoti muhandisi — TIQXMMI Milliy Tadqiqot Universiteti magistranti</p>
+  <p class="hero-sub" style="margin-top:.4rem;font-size:14px;opacity:.7;" data-i="hero_sub2">Olmaliq KMK — 3-MBF O va TST sexi muhandisi</p>
+  <div class="hero-langs">
+    <span class="lang-badge" data-i="lang1">O'zbek tili</span>
+    <span class="lang-badge" data-i="lang2">Ingliz tili</span>
+    <span class="lang-badge" data-i="lang3">Arab tili (o'rganilmoqda)</span>
+  </div>
+  <div class="hero-btns">
+    <button class="btn-gold" onclick="document.getElementById('experience').scrollIntoView({behavior:'smooth'})" data-i="btn_exp">Tajribani ko'rish</button>
+    <button class="btn-border" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})" data-i="btn_contact">Bog'lanish</button>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-grid">
+    <div>
+      <div class="avatar-box"><div class="avatar-letters">AA</div></div>
+    </div>
+    <div class="about-text">
+      <div class="sec-tag" data-i="about_tag">Men haqimda</div>
+      <h2 data-i="about_h2">Muhandis</h2>
+      <div class="divider"></div>
+      <p data-i="about_p1">Men <strong>Azizbek Abilov</strong> — suv ta'minoti muhandisiman. TIQXMMI Milliy Tadqiqot Universitetida bakalavr va magistratura ta'limini olganman. Muhandislik sohasida nazariy bilim bilan amaliy tajribani muvaffaqiyatli uyg'unlashtirganman.</p>
+      <p data-i="about_p2">2025-yildan boshlab obodonlashtirish va sanoat sohalarida mas'ul lavozimlarni egallaganman. Logistika, biznes va arab tili kabi yangi sohalarga ham qiziqishim yuqori.</p>
+      <p data-i="about_p3">MS Office dasturlarida erkin ishlash ko'nikmalariga egaman. O'zbek va ingliz tillarida muloqot va rasmiy hujjatlar bilan ishlash qobiliyatim mavjud.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills" id="skills">
+  <div class="sec-tag" data-i="skills_tag">Mutaxassislik</div>
+  <h2 data-i="skills_h2">Ko'nikmalar</h2>
+  <div class="divider"></div>
+  <div class="skills-grid">
+    <div class="skill-card"><h3 data-i="sk1_h">Suv Ta'minoti Muhandisligi</h3><p data-i="sk1_p">Suv tarmoqlari loyihalash, qurilish va ulardan foydalanish bo'yicha chuqur bilim</p></div>
+    <div class="skill-card"><h3 data-i="sk2_h">Yo'l-Ko'prik Xo'jaligi</h3><p data-i="sk2_p">Bo'lim boshlig'i sifatida infratuzilma boshqaruvi va nazorat tajribasi</p></div>
+    <div class="skill-card"><h3 data-i="sk3_h">MS Office</h3><p data-i="sk3_p">Word, Excel, PowerPoint va boshqa Microsoft Office dasturlarida erkin ishlash</p></div>
+    <div class="skill-card"><h3 data-i="sk4_h">Til Ko'nikmalar</h3><p data-i="sk4_p">O'zbek va ingliz tilida yozma va og'zaki muloqot; arab tilini o'rganish jarayonida</p></div>
+    <div class="skill-card"><h3 data-i="sk5_h">Rahbarlik</h3><p data-i="sk5_p">Davlat tashkilotida bo'lim boshlig'i sifatida jamoa va jarayonlarni boshqarish</p></div>
+    <div class="skill-card"><h3 data-i="sk6_h">Muhandislik Hisoblash</h3><p data-i="sk6_p">Loyiha hisob-kitoblari, texnik tahlil va hisobot tuzish ko'nikmalari</p></div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="experience" id="experience">
+  <div class="sec-tag" data-i="exp_tag">Martabam</div>
+  <h2 data-i="exp_h2">Ish Tajribasi</h2>
+  <div class="divider"></div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date" data-i="exp1_date">2026 — Hozir</div>
+      <div class="tl-role" data-i="exp1_role">Muhandis — 3-MBF</div>
+      <div class="tl-org">"OKMK" AJ, O'zbekiston</div>
+      <div class="tl-desc" data-i="exp1_desc">O'zbekiston metallurgiya sanoatining yetakchi korxonasida muhandis sifatida faoliyat ko'rsatmoqdaman. Texnik jarayonlar nazorati va muhandislik yechimlar ishlab chiqish bilan shug'ullanmoqdaman.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">2025</div>
+      <div class="tl-role" data-i="exp2_role">Bo'lim Boshlig'i — Yo'l-Ko'prik Xo'jaligidan Foydalanish</div>
+      <div class="tl-org" data-i="exp2_org">Ohangaron tumani obodonlashtirish boshqarmasi</div>
+      <div class="tl-desc" data-i="exp2_desc">Ohangaron tumani infratuzilmasini boshqarish va saqlash bo'yicha mas'ul bo'lim boshlig'i lavozimini egalladim. Yo'l va ko'prik ob'ektlarini texnik nazorat qilish va ishlatish tartibini ta'minladim.</div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="edu" id="education">
+  <div class="sec-tag" data-i="edu_tag">Ta'lim</div>
+  <h2 data-i="edu_h2">O'qish Tarixi</h2>
+  <div class="divider"></div>
+  <div class="edu-grid">
+    <div class="edu-card">
+      <div class="edu-year">2024 — 2026</div>
+      <div class="edu-title" data-i="edu1_title">Magistratura</div>
+      <div class="edu-uni" data-i="edu1_uni">TIQXMMI MTU — Suv ta'minoti muhandisligi</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-year">2020 — 2024</div>
+      <div class="edu-title" data-i="edu2_title">Bakalavr</div>
+      <div class="edu-uni" data-i="edu2_uni">TIQXMMI MTU — Suv ta'minoti muhandisligi</div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERESTS -->
+<section class="interests" id="interests">
+  <div class="sec-tag" data-i="int_tag">Qiziqishlar</div>
+  <h2 data-i="int_h2">Qo'shimcha Sohalar</h2>
+  <div class="divider"></div>
+  <div class="int-grid">
+    <div class="int-card">
+      <div class="int-icon-wrap"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+      <h3 data-i="int1_h">Arab Tili</h3><p data-i="int1_p">Faol o'rganish jarayonida</p>
+    </div>
+    <div class="int-card">
+      <div class="int-icon-wrap"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><path d="M16 8l5 5-5 5V8z"/></svg></div>
+      <h3 data-i="int2_h">Logistika</h3><p data-i="int2_p">Zanjir boshqaruvi va transport</p>
+    </div>
+    <div class="int-card">
+      <div class="int-icon-wrap"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+      <h3 data-i="int3_h">Biznes</h3><p data-i="int3_p">Tadbirkorlik va moliya asoslari</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="sec-tag" data-i="contact_tag">Muloqot</div>
+  <h2 data-i="contact_h2">Bog'laning</h2>
+  <div class="divider"></div>
+  <div class="contact-inner">
+    <div>
+      <p class="contact-desc" data-i="contact_desc">Hamkorlik, loyiha yoki savol bo'lsa — quyidagi kanallar orqali bog'laning. Xabaringizga tez orada javob beraman.</p>
+      <div class="contact-items">
+        <a class="c-item" href="https://t.me/Azizbek_Abilov" target="_blank">
+          <div class="c-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
+          </div>
+          <div><div class="c-label">Telegram</div><div class="c-val">@Azizbek_Abilov</div></div>
+        </a>
+        <a class="c-item" href="mailto:abilovazizbek09@gmail.com">
+          <div class="c-icon">
+            <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+          </div>
+          <div><div class="c-label">Email</div><div class="c-val">abilovazizbek09@gmail.com</div></div>
+        </a>
+      </div>
+    </div>
+    <div class="contact-right">
+      <p data-i="contact_coop">Quyidagi sohalarda hamkorlik qilishga tayyorman:</p>
+      <ul>
+        <li data-i="coop1">Suv ta'minoti va muhandislik loyihalari</li>
+        <li data-i="coop2">Infratuzilma boshqaruvi va maslahat</li>
+        <li data-i="coop3">Logistika va biznes sohalari</li>
+        <li data-i="coop4">Texnik hujjatlar va hisobotlar</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-logo">Azizbek Abilov</div>
+  <p data-i="footer_copy">© 2026 — Barcha huquqlar himoyalangan</p>
+</footer>
+
+<script>
+const T = {
+  uz:{
+    nav_about:"Men haqimda",nav_skills:"Ko'nikmalar",nav_exp:"Tajriba",nav_edu:"Ta'lim",nav_contact:"Aloqa",
+    hero_tag:"Muhandis · Professional",hero_hello:"Salom",hero_i:"men",
+    hero_sub:"Suv ta'minoti muhandisi — TIQXMMI Milliy Tadqiqot Universiteti magistranti",
+    hero_sub2:"Olmaliq KMK — 3-MBF O va TST sexi muhandisi",
+    lang1:"O'zbek tili",lang2:"Ingliz tili",lang3:"Arab tili (o'rganilmoqda)",
+    btn_exp:"Tajribani ko'rish",btn_contact:"Bog'lanish",
+    about_tag:"Men haqimda",about_h2:"Muhandis",
+    about_p1:"Men <strong>Azizbek Abilov</strong> — suv ta'minoti muhandisiman. TIQXMMI Milliy Tadqiqot Universitetida bakalavr va magistratura ta'limini olganman. Muhandislik sohasida nazariy bilim bilan amaliy tajribani muvaffaqiyatli uyg'unlashtirganman.",
+    about_p2:"2025-yildan boshlab obodonlashtirish va sanoat sohalarida mas'ul lavozimlarni egallaganman. Logistika, biznes va arab tili kabi yangi sohalarga ham qiziqishim yuqori.",
+    about_p3:"MS Office dasturlarida erkin ishlash ko'nikmalariga egaman. O'zbek va ingliz tillarida muloqot va rasmiy hujjatlar bilan ishlash qobiliyatim mavjud.",
+    skills_tag:"Mutaxassislik",skills_h2:"Ko'nikmalar",
+    sk1_h:"Suv Ta'minoti Muhandisligi",sk1_p:"Suv tarmoqlari loyihalash, qurilish va ulardan foydalanish bo'yicha chuqur bilim",
+    sk2_h:"Yo'l-Ko'prik Xo'jaligi",sk2_p:"Bo'lim boshlig'i sifatida infratuzilma boshqaruvi va nazorat tajribasi",
+    sk3_h:"MS Office",sk3_p:"Word, Excel, PowerPoint va boshqa Microsoft Office dasturlarida erkin ishlash",
+    sk4_h:"Til Ko'nikmalar",sk4_p:"O'zbek va ingliz tilida yozma va og'zaki muloqot; arab tilini o'rganish jarayonida",
+    sk5_h:"Rahbarlik",sk5_p:"Davlat tashkilotida bo'lim boshlig'i sifatida jamoa va jarayonlarni boshqarish",
+    sk6_h:"Muhandislik Hisoblash",sk6_p:"Loyiha hisob-kitoblari, texnik tahlil va hisobot tuzish ko'nikmalari",
+    exp_tag:"Martabam",exp_h2:"Ish Tajribasi",
+    exp1_date:"2026 — Hozir",exp1_role:"Muhandis — 3-MBF",
+    exp1_desc:"O'zbekiston metallurgiya sanoatining yetakchi korxonasida muhandis sifatida faoliyat ko'rsatmoqdaman. Texnik jarayonlar nazorati va muhandislik yechimlar ishlab chiqish bilan shug'ullanmoqdaman.",
+    exp2_role:"Bo'lim Boshlig'i — Yo'l-Ko'prik Xo'jaligidan Foydalanish",
+    exp2_org:"Ohangaron tumani obodonlashtirish boshqarmasi",
+    exp2_desc:"Ohangaron tumani infratuzilmasini boshqarish va saqlash bo'yicha mas'ul bo'lim boshlig'i lavozimini egalladim. Yo'l va ko'prik ob'ektlarini texnik nazorat qilish va ishlatish tartibini ta'minladim.",
+    edu_tag:"Ta'lim",edu_h2:"O'qish Tarixi",
+    edu1_title:"Magistratura",edu1_uni:"TIQXMMI MTU — Suv ta'minoti muhandisligi",
+    edu2_title:"Bakalavr",edu2_uni:"TIQXMMI MTU — Suv ta'minoti muhandisligi",
+    int_tag:"Qiziqishlar",int_h2:"Qo'shimcha Sohalar",
+    int1_h:"Arab Tili",int1_p:"Faol o'rganish jarayonida",
+    int2_h:"Logistika",int2_p:"Zanjir boshqaruvi va transport",
+    int3_h:"Biznes",int3_p:"Tadbirkorlik va moliya asoslari",
+    contact_tag:"Muloqot",contact_h2:"Bog'laning",
+    contact_desc:"Hamkorlik, loyiha yoki savol bo'lsa — quyidagi kanallar orqali bog'laning. Xabaringizga tez orada javob beraman.",
+    contact_coop:"Quyidagi sohalarda hamkorlik qilishga tayyorman:",
+    coop1:"Suv ta'minoti va muhandislik loyihalari",coop2:"Infratuzilma boshqaruvi va maslahat",
+    coop3:"Logistika va biznes sohalari",coop4:"Texnik hujjatlar va hisobotlar",
+    footer_copy:"© 2026 — Barcha huquqlar himoyalangan"
+  },
+  en:{
+    nav_about:"About",nav_skills:"Skills",nav_exp:"Experience",nav_edu:"Education",nav_contact:"Contact",
+    hero_tag:"Engineer · Professional",hero_hello:"Hello",hero_i:"I am",
+    hero_sub:"Water Supply Engineer — Master's student at TIIAME National Research University",
+    hero_sub2:"Almalyk MMC — Engineer at 3rd MBF O and TST Workshop",
+    lang1:"Uzbek language",lang2:"English language",lang3:"Arabic (learning)",
+    btn_exp:"View Experience",btn_contact:"Contact Me",
+    about_tag:"About Me",about_h2:"Engineer",
+    about_p1:"I am <strong>Azizbek Abilov</strong> — a water supply engineer. I completed my bachelor's and master's studies at TIIAME National Research University, successfully combining theoretical knowledge with practical experience in the engineering field.",
+    about_p2:"Since 2025, I have held responsible positions in municipal management and industrial sectors. I also have a strong interest in logistics, business, and the Arabic language.",
+    about_p3:"I am proficient in MS Office applications. I am able to communicate and work with official documents in both Uzbek and English.",
+    skills_tag:"Expertise",skills_h2:"Skills",
+    sk1_h:"Water Supply Engineering",sk1_p:"Deep knowledge in designing, constructing and operating water supply networks",
+    sk2_h:"Road & Bridge Management",sk2_p:"Infrastructure management and supervision experience as department head",
+    sk3_h:"MS Office",sk3_p:"Proficient in Word, Excel, PowerPoint and other Microsoft Office tools",
+    sk4_h:"Language Skills",sk4_p:"Written and verbal communication in Uzbek and English; learning Arabic",
+    sk5_h:"Leadership",sk5_p:"Team and process management as department head in a government organization",
+    sk6_h:"Engineering Calculations",sk6_p:"Project calculations, technical analysis and report preparation",
+    exp_tag:"Career",exp_h2:"Work Experience",
+    exp1_date:"2026 — Present",exp1_role:"Engineer — 3rd MBF",
+    exp1_desc:"Working as an engineer at one of Uzbekistan's leading metallurgical enterprises. Engaged in technical process monitoring and developing engineering solutions.",
+    exp2_role:"Department Head — Road & Bridge Asset Management",
+    exp2_org:"Ohangaron District Municipal Management Office",
+    exp2_desc:"Served as department head responsible for managing and maintaining the district infrastructure. Ensured technical supervision and operation of road and bridge facilities.",
+    edu_tag:"Education",edu_h2:"Academic History",
+    edu1_title:"Master's Degree",edu1_uni:"TIIAME NRU — Water Supply Engineering",
+    edu2_title:"Bachelor's Degree",edu2_uni:"TIIAME NRU — Water Supply Engineering",
+    int_tag:"Interests",int_h2:"Additional Fields",
+    int1_h:"Arabic Language",int1_p:"Actively learning",
+    int2_h:"Logistics",int2_p:"Supply chain & transportation",
+    int3_h:"Business",int3_p:"Entrepreneurship & finance basics",
+    contact_tag:"Contact",contact_h2:"Get in Touch",
+    contact_desc:"For collaboration, projects or questions — reach out through the channels below. I will respond promptly.",
+    contact_coop:"I am ready to collaborate in the following fields:",
+    coop1:"Water supply and engineering projects",coop2:"Infrastructure management and consulting",
+    coop3:"Logistics and business sectors",coop4:"Technical documents and reports",
+    footer_copy:"© 2026 — All rights reserved"
+  },
+  ru:{
+    nav_about:"Обо мне",nav_skills:"Навыки",nav_exp:"Опыт",nav_edu:"Образование",nav_contact:"Контакт",
+    hero_tag:"Инженер · Профессионал",hero_hello:"Привет",hero_i:"я",
+    hero_sub:"Инженер водоснабжения — магистрант ТИИРМСХ НИУ",
+    hero_sub2:"Алмалыкский ГМК — инженер цеха 3-го МБФ О и ТСТ",
+    lang1:"Узбекский язык",lang2:"Английский язык",lang3:"Арабский язык (изучается)",
+    btn_exp:"Посмотреть опыт",btn_contact:"Связаться",
+    about_tag:"Обо мне",about_h2:"Инженер",
+    about_p1:"Я <strong>Азизбек Абилов</strong> — инженер водоснабжения. Окончил бакалавриат и магистратуру в ТИИРМСХ НИУ, успешно сочетая теоретические знания с практическим опытом в инженерной сфере.",
+    about_p2:"С 2025 года занимаю ответственные должности в сфере благоустройства и промышленности. Также интересуюсь логистикой, бизнесом и арабским языком.",
+    about_p3:"Свободно работаю в программах MS Office. Способен общаться и работать с официальными документами на узбекском и английском языках.",
+    skills_tag:"Специализация",skills_h2:"Навыки",
+    sk1_h:"Инженерия водоснабжения",sk1_p:"Глубокие знания в проектировании, строительстве и эксплуатации водопроводных сетей",
+    sk2_h:"Дорожно-мостовое хозяйство",sk2_p:"Опыт управления инфраструктурой и надзора в качестве начальника отдела",
+    sk3_h:"MS Office",sk3_p:"Уверенное владение Word, Excel, PowerPoint и другими программами Microsoft Office",
+    sk4_h:"Языковые навыки",sk4_p:"Письменное и устное общение на узбекском и английском; изучение арабского",
+    sk5_h:"Руководство",sk5_p:"Управление командой и процессами в качестве начальника отдела государственной организации",
+    sk6_h:"Инженерные расчёты",sk6_p:"Проектные расчёты, технический анализ и составление отчётов",
+    exp_tag:"Карьера",exp_h2:"Опыт работы",
+    exp1_date:"2026 — Настоящее время",exp1_role:"Инженер — 3-й МБФ",
+    exp1_desc:"Работаю инженером на ведущем металлургическом предприятии Узбекистана. Занимаюсь контролем технических процессов и разработкой инженерных решений.",
+    exp2_role:"Начальник отдела — Эксплуатация дорожно-мостового хозяйства",
+    exp2_org:"Управление благоустройства Охангаронского района",
+    exp2_desc:"Занимал должность начальника отдела, ответственного за управление и содержание инфраструктуры района. Обеспечивал технический надзор и эксплуатацию дорожных и мостовых объектов.",
+    edu_tag:"Образование",edu_h2:"Учебная история",
+    edu1_title:"Магистратура",edu1_uni:"ТИИРМСХ НИУ — Инженерия водоснабжения",
+    edu2_title:"Бакалавриат",edu2_uni:"ТИИРМСХ НИУ — Инженерия водоснабжения",
+    int_tag:"Интересы",int_h2:"Дополнительные сферы",
+    int1_h:"Арабский язык",int1_p:"Активно изучаю",
+    int2_h:"Логистика",int2_p:"Управление цепочками и транспорт",
+    int3_h:"Бизнес",int3_p:"Предпринимательство и основы финансов",
+    contact_tag:"Контакт",contact_h2:"Связаться",
+    contact_desc:"По вопросам сотрудничества, проектам или любым вопросам — пишите через указанные каналы. Отвечу в ближайшее время.",
+    contact_coop:"Готов к сотрудничеству в следующих сферах:",
+    coop1:"Водоснабжение и инженерные проекты",coop2:"Управление инфраструктурой и консультации",
+    coop3:"Логистика и бизнес",coop4:"Технические документы и отчёты",
+    footer_copy:"© 2026 — Все права защищены"
+  },
+  ar:{
+    nav_about:"عني",nav_skills:"المهارات",nav_exp:"الخبرة",nav_edu:"التعليم",nav_contact:"التواصل",
+    hero_tag:"مهندس · محترف",hero_hello:"مرحباً",hero_i:"أنا",
+    hero_sub:"مهندس إمدادات المياه — طالب ماجستير في جامعة TIIAME الوطنية للبحوث",
+    hero_sub2:"مجمع ألماليق للتعدين والمعادن — مهندس في ورشة 3-MBF O و TST",
+    lang1:"اللغة الأوزبكية",lang2:"اللغة الإنجليزية",lang3:"اللغة العربية (قيد التعلم)",
+    btn_exp:"عرض الخبرة",btn_contact:"تواصل معي",
+    about_tag:"عني",about_h2:"مهندس",
+    about_p1:"أنا <strong>عزيزبك أبيلوف</strong> — مهندس إمدادات المياه. أتممت درجتي البكالوريوس والماجستير في جامعة TIIAME الوطنية للبحوث، مجمعاً بين المعرفة النظرية والخبرة العملية في المجال الهندسي.",
+    about_p2:"منذ عام 2025، شغلت مناصب مسؤولة في قطاعي إدارة البلديات والصناعة. كما أملك اهتماماً واسعاً باللوجستيات والأعمال واللغة العربية.",
+    about_p3:"أتقن العمل على تطبيقات MS Office. وأستطيع التواصل والعمل على الوثائق الرسمية باللغتين الأوزبكية والإنجليزية.",
+    skills_tag:"التخصص",skills_h2:"المهارات",
+    sk1_h:"هندسة إمدادات المياه",sk1_p:"معرفة عميقة في تصميم وإنشاء وتشغيل شبكات إمدادات المياه",
+    sk2_h:"إدارة الطرق والجسور",sk2_p:"خبرة في إدارة البنية التحتية والإشراف عليها بصفة رئيس قسم",
+    sk3_h:"MS Office",sk3_p:"إتقان برامج Word وExcel وPowerPoint وغيرها من تطبيقات مايكروسوفت أوفيس",
+    sk4_h:"مهارات اللغات",sk4_p:"التواصل الكتابي والشفهي بالأوزبكية والإنجليزية؛ تعلم العربية",
+    sk5_h:"القيادة",sk5_p:"إدارة الفريق والعمليات بوصفي رئيس قسم في مؤسسة حكومية",
+    sk6_h:"الحسابات الهندسية",sk6_p:"حسابات المشاريع والتحليل التقني وإعداد التقارير",
+    exp_tag:"مسيرتي",exp_h2:"الخبرة المهنية",
+    exp1_date:"2026 — حتى الآن",exp1_role:"مهندس — قسم 3-MBF",
+    exp1_desc:"أعمل مهندساً في إحدى أبرز شركات الصناعة المعدنية في أوزبكستان. أتولى مراقبة العمليات التقنية وتطوير الحلول الهندسية.",
+    exp2_role:"رئيس قسم — استخدام قطاع الطرق والجسور",
+    exp2_org:"إدارة التحسين في منطقة أوهانغاران",
+    exp2_desc:"شغلت منصب رئيس القسم المسؤول عن إدارة وصيانة البنية التحتية للمنطقة، مع ضمان الإشراف التقني وتشغيل مرافق الطرق والجسور.",
+    edu_tag:"التعليم",edu_h2:"السيرة الأكاديمية",
+    edu1_title:"درجة الماجستير",edu1_uni:"جامعة TIIAME الوطنية — هندسة إمدادات المياه",
+    edu2_title:"درجة البكالوريوس",edu2_uni:"جامعة TIIAME الوطنية — هندسة إمدادات المياه",
+    int_tag:"الاهتمامات",int_h2:"مجالات إضافية",
+    int1_h:"اللغة العربية",int1_p:"في مرحلة التعلم النشط",
+    int2_h:"اللوجستيات",int2_p:"إدارة سلاسل الإمداد والنقل",
+    int3_h:"الأعمال",int3_p:"ريادة الأعمال وأساسيات التمويل",
+    contact_tag:"التواصل",contact_h2:"تواصل معي",
+    contact_desc:"للتعاون أو المشاريع أو أي استفسار — تواصل معي عبر القنوات أدناه. سأرد في أقرب وقت ممكن.",
+    contact_coop:"أنا مستعد للتعاون في المجالات التالية:",
+    coop1:"مشاريع إمدادات المياه والهندسة",coop2:"إدارة البنية التحتية والاستشارات",
+    coop3:"قطاعات اللوجستيات والأعمال",coop4:"الوثائق التقنية والتقارير",
+    footer_copy:"© 2026 — جميع الحقوق محفوظة"
+  }
+};
+
+let curLang = 'uz';
+
+function applyLang(l) {
+  curLang = l;
+  const d = T[l];
+  document.querySelectorAll('[data-i]').forEach(el => {
+    const k = el.getAttribute('data-i');
+    if(d[k] !== undefined) el.innerHTML = d[k];
+  });
+  if(l === 'ar') {
+    document.body.classList.add('rtl');
+    document.documentElement.setAttribute('lang','ar');
+    document.documentElement.setAttribute('dir','rtl');
+  } else {
+    document.body.classList.remove('rtl');
+    document.documentElement.setAttribute('lang', l === 'uz' ? 'uz' : l === 'ru' ? 'ru' : 'en');
+    document.documentElement.setAttribute('dir','ltr');
+  }
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.l === l);
+  });
+}
+
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => applyLang(btn.dataset.l));
+});
+
+// DARK MODE
+const themeBtn = document.getElementById('themeBtn');
+let dark = false;
+themeBtn.addEventListener('click', () => {
+  dark = !dark;
+  document.body.classList.toggle('dark', dark);
+  themeBtn.textContent = dark ? '☽' : '☀';
+});
+
+// SCROLL ANIMATIONS
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold: 0.1});
+
+document.querySelectorAll('section, div.hero').forEach(el => observer.observe(el));
+
+// Smooth scroll for nav links
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const id = a.getAttribute('href').slice(1);
+    const target = document.getElementById(id);
+    if(target) target.scrollIntoView({behavior:'smooth'});
+  });
+});
+</script>
+</body>
+</html>
